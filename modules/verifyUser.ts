@@ -1,0 +1,7 @@
+export function verifyUser(username: string, password: string) {
+    if (username === "test" && password === "test") {
+        console.log("Login successful");
+    } else {
+        console.log("Login failed");
+    }
+}
