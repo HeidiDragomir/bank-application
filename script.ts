@@ -1,1 +1,4 @@
-console.log("Hello World");
+import {createLoginForm} from "./modules/createLoginForm";
+
+// Create login form
+createLoginForm()
