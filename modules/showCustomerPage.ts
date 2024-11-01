@@ -1,5 +1,6 @@
 import { Bank } from "../classes/Bank.js";
 import { Customer } from "../classes/Customer.js";
+import { showMessage } from "./showMessage.js";
 import { showStartpage } from "./showStartpage.js";
 
 export function showCustomerPage(username: string | number) {
@@ -131,6 +132,11 @@ export function showCustomerPage(username: string | number) {
             result.customers.forEach((customer: Customer) => {
                 if (customer.name === username) {
                     const amount = Number(inputAmount.value);
+
+                    if (amount > customer.balance || customer.balance === 0) {
+                        alert("Du har inte tillräckligt med pengar");
+                        return; 
+                    }
                     customer.balance -= amount;
                 }
                 localStorage.setItem("banks", JSON.stringify(banks));

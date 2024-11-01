@@ -93,6 +93,10 @@ export function showCustomerPage(username) {
             result.customers.forEach((customer) => {
                 if (customer.name === username) {
                     const amount = Number(inputAmount.value);
+                    if (amount > customer.balance || customer.balance === 0) {
+                        alert("Du har inte tillräckligt med pengar");
+                        return;
+                    }
                     customer.balance -= amount;
                 }
                 localStorage.setItem("banks", JSON.stringify(banks));
