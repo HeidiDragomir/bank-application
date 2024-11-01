@@ -1,8 +1,18 @@
+import { createLoginForm } from "./createLoginForm.js";
+import { showAdmPage } from "./showAdmPage.js";
+import { showCustomerPage } from "./showCustomerPage.js";
+import { showMessage } from "./showMessage.js";
 export function verifyUser(username, password) {
-    if (username === "test" && password === "test") {
-        console.log("Login successful");
+    if (username === "admin" && password === "admin") {
+        showMessage("Välkommen " + username);
+        showAdmPage();
+    }
+    else if (username === "test" && password === "test") {
+        showMessage("Välkommen " + username);
+        showCustomerPage();
     }
     else {
-        console.log("Login failed");
+        showMessage("Fel användarnamn eller lösenord. Försök igen.");
+        createLoginForm();
     }
 }

@@ -7,3 +7,17 @@
 body {
     font-family: 'Poppins', sans-serif;
 }
+
+/* #root {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    margin: 50px;
+} */
+
+#banks-list {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}

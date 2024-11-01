@@ -1,17 +1,18 @@
+import { Customer } from "../classes/Customer.js";
 import { verifyUser } from "./verifyUser.js";
 export function createLoginForm() {
     const root = document.getElementById("root");
-    root.innerHTML = "";
-    const form = document.createElement("form");
-    form.classList.add("login-form");
+    const formContainer = document.createElement("div");
+    formContainer.innerHTML = "";
+    formContainer.id = "form-container";
     const inputUsername = document.createElement("input");
     inputUsername.type = "text";
-    inputUsername.placeholder = "Username";
+    inputUsername.placeholder = "Användarnamn";
     inputUsername.name = "username";
     inputUsername.required = true;
     const inputPassword = document.createElement("input");
     inputPassword.type = "password";
-    inputPassword.placeholder = "Password";
+    inputPassword.placeholder = "Lösenord";
     inputPassword.name = "password";
     inputPassword.required = true;
     const buttonLogin = document.createElement("button");
@@ -21,12 +22,15 @@ export function createLoginForm() {
         event.preventDefault();
         const username = inputUsername.value;
         const password = inputPassword.value;
-        console.log(username, password);
-        verifyUser(username, password);
+        let balance = 0;
+        let customer = new Customer(username, password, balance);
+        localStorage.setItem("customer", JSON.stringify(customer));
+        console.log(customer);
+        verifyUser(customer.name, customer.password);
     });
-    form.appendChild(inputUsername);
-    form.appendChild(inputPassword);
-    form.appendChild(buttonLogin);
-    root.appendChild(form);
-    return form;
+    formContainer.appendChild(inputUsername);
+    formContainer.appendChild(inputPassword);
+    formContainer.appendChild(buttonLogin);
+    root.appendChild(formContainer);
+    return formContainer;
 }
