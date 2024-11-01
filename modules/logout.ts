@@ -9,5 +9,5 @@ export function logout() {
         root.innerHTML = "";
         showStartpage();
     });
-    root.appendChild(logoutBtn);
+    return logoutBtn;
 }

@@ -4,7 +4,8 @@ import { logout } from "./logout.js";
 import { showBankPage } from "./showBankPage.js";
 export function showAdmPage() {
     const root = document.getElementById("root");
-    logout();
+    const logoutBtn = logout();
+    root.appendChild(logoutBtn);
     let banks = localStorage.getItem("banks");
     if (banks === null) {
         let bankRegistry = new BankRegistry();
@@ -27,6 +28,9 @@ export function showAdmPage() {
     }
     else {
         let banks = JSON.parse(localStorage.getItem("banks") || "[]");
+        const banksList = document.createElement("ul");
+        banksList.id = "banks-list";
+        root.appendChild(banksList);
         banks.forEach((bank) => {
             const bankItem = document.createElement("li");
             bankItem.addEventListener("click", (event) => {
@@ -35,7 +39,7 @@ export function showAdmPage() {
                 showBankPage(bankName);
             });
             bankItem.innerText = bank.name;
-            root.appendChild(bankItem);
+            banksList.appendChild(bankItem);
         });
     }
 }

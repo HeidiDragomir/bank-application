@@ -2,13 +2,13 @@ import { Bank } from "../classes/Bank.js";
 import { BankRegistry } from "../classes/BankRegistry.js";
 import { logout } from "./logout.js";
 import { showBankPage } from "./showBankPage.js";
-import { showStartpage } from "./showStartpage.js";
 
 export function showAdmPage() {
     const root = document.getElementById("root") as HTMLElement;
 
-    logout()
-    
+    const logoutBtn = logout()
+    root.appendChild(logoutBtn);
+
     let banks = localStorage.getItem("banks");
 
     if (banks === null) {
@@ -26,6 +26,7 @@ export function showAdmPage() {
         bankRegistry.showBanks();
 
         const bankItems = document.querySelectorAll("li");
+
         bankItems.forEach((bankItem) => {
             bankItem.addEventListener("click", (event) => {
                 event.preventDefault();
@@ -33,8 +34,13 @@ export function showAdmPage() {
                 showBankPage(bankName);
             });
         })
+        
     } else {
         let banks = JSON.parse(localStorage.getItem("banks") || "[]")
+
+        const banksList = document.createElement("ul");
+        banksList.id = "banks-list";
+        root.appendChild(banksList);
 
         banks.forEach((bank: Bank) => {
             const bankItem = document.createElement("li");
@@ -45,10 +51,7 @@ export function showAdmPage() {
             })
 
             bankItem.innerText = bank.name;
-           root.appendChild(bankItem);
+            banksList.appendChild(bankItem);
         });
     }
-
-    
-    
 }

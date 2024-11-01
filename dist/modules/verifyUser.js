@@ -2,6 +2,7 @@ import { createLoginForm } from "./createLoginForm.js";
 import { showAdmPage } from "./showAdmPage.js";
 import { showCustomerPage } from "./showCustomerPage.js";
 import { showMessage } from "./showMessage.js";
+import { createSignupForm } from "./createSignupForm.js";
 export function verifyUser(username, password) {
     let banks = localStorage.getItem("banks");
     if (username === "admin" && password === "admin") {
@@ -25,4 +26,6 @@ export function verifyUser(username, password) {
         createLoginForm();
         return;
     }
+    showMessage("Det finns ej användare med detta användarnamn. Försök igen.");
+    createSignupForm();
 }

@@ -3,8 +3,11 @@ import { createSignupForm } from "./createSignupForm.js";
 
 
 export function showStartpage() {
-    
+
     const root = document.getElementById("root") as HTMLElement;
+    
+    const btnContainer = document.createElement("div");
+    btnContainer.id = "btn-container";
 
     const loginBtn = document.createElement("button");
     loginBtn.innerText = "Logga in";
@@ -22,6 +25,8 @@ export function showStartpage() {
         createSignupForm();
     });
 
-    root.appendChild(signupBtn);
-    root.appendChild(loginBtn);
+    btnContainer.appendChild(signupBtn);
+    btnContainer.appendChild(loginBtn);
+
+    root.appendChild(btnContainer);
 }

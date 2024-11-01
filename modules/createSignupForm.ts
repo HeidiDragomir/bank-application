@@ -86,7 +86,6 @@ export function createSignupForm() {
             showCustomerPage(username);
         }
 
-        
     })
 
     formContainer.appendChild(inputUsername);

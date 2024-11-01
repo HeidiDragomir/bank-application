@@ -1,7 +1,9 @@
+import { createSign } from "crypto";
 import { createLoginForm } from "./createLoginForm.js";
 import { showAdmPage } from "./showAdmPage.js";
 import { showCustomerPage } from "./showCustomerPage.js";
 import { showMessage } from "./showMessage.js";
+import { createSignupForm } from "./createSignupForm.js";
 
 export function verifyUser(username: string | number, password: string | number) {
 
@@ -33,7 +35,9 @@ export function verifyUser(username: string | number, password: string | number)
         showMessage("Fel användarnamn eller lösenord. Försök igen.");
         createLoginForm();
         return
-    }    
+    }
+    showMessage("Det finns ej användare med detta användarnamn. Försök igen.");
+    createSignupForm()  
 }
 
 

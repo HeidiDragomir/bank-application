@@ -1,5 +1,3 @@
-import { Bank } from "./Bank.js";
-
 export class Customer {
     name: string | number;
     password: string | number;
