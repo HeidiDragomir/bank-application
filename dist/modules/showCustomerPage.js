@@ -1,3 +1,4 @@
+import { Customer } from "../classes/Customer.js";
 import { showStartpage } from "./showStartpage.js";
 export function showCustomerPage(username) {
     const root = document.getElementById("root");
@@ -30,6 +31,13 @@ export function showCustomerPage(username) {
     root.appendChild(withdrawDiv);
     balance.addEventListener("click", () => {
         let banks = JSON.parse(localStorage.getItem("banks"));
+        // Recreate Customer instances
+        banks = banks.map((bank) => {
+            bank.customers = bank.customers.map((customerData) => {
+                return new Customer(customerData.name, customerData.password, customerData.balance);
+            });
+            return bank;
+        });
         balanceDiv.innerHTML = "";
         withdrawDiv.innerHTML = "";
         depositDiv.innerHTML = "";
@@ -39,7 +47,8 @@ export function showCustomerPage(username) {
             if (customer.name === username) {
                 const balancePara = document.createElement("p");
                 balancePara.id = "balance-para";
-                balancePara.innerText = `Ditt saldo: ${customer.balance}`;
+                let balance = customer.getBalance();
+                balancePara.innerText = `Ditt saldo: ${balance}`;
                 balanceDiv.appendChild(balancePara);
             }
         });
@@ -60,13 +69,20 @@ export function showCustomerPage(username) {
         depositDiv.appendChild(button);
         button.addEventListener("click", () => {
             let banks = JSON.parse(localStorage.getItem("banks"));
+            // Recreate Customer instances
+            banks = banks.map((bank) => {
+                bank.customers = bank.customers.map((customerData) => {
+                    return new Customer(customerData.name, customerData.password, customerData.balance);
+                });
+                return bank;
+            });
             // find the inlogged customer
             const result = banks.find((bank) => bank.customers.find((customer) => customer.name === username));
             console.log("result", result);
             result.customers.forEach((customer) => {
                 if (customer.name === username) {
                     const amount = Number(inputAmount.value);
-                    customer.balance += amount;
+                    customer.deposit(amount);
                 }
                 localStorage.setItem("banks", JSON.stringify(banks));
             });
@@ -88,6 +104,13 @@ export function showCustomerPage(username) {
         button.textContent = "Ta ut";
         button.addEventListener("click", () => {
             let banks = JSON.parse(localStorage.getItem("banks"));
+            // Recreate Customer instances
+            banks = banks.map((bank) => {
+                bank.customers = bank.customers.map((customerData) => {
+                    return new Customer(customerData.name, customerData.password, customerData.balance);
+                });
+                return bank;
+            });
             // find the inlogged customer
             const result = banks.find((bank) => bank.customers.find((customer) => customer.name === username));
             result.customers.forEach((customer) => {
@@ -97,7 +120,7 @@ export function showCustomerPage(username) {
                         alert("Du har inte tillräckligt med pengar");
                         return;
                     }
-                    customer.balance -= amount;
+                    customer.withdraw(amount);
                 }
                 localStorage.setItem("banks", JSON.stringify(banks));
             });

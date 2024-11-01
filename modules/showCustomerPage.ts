@@ -45,20 +45,31 @@ export function showCustomerPage(username: string | number) {
     balance.addEventListener("click", () => {
         let banks = JSON.parse(localStorage.getItem("banks") as string);
 
+         // Recreate Customer instances
+        banks = banks.map((bank: Bank) => {
+            bank.customers = bank.customers.map((customerData) => {
+                return new Customer(customerData.name as string, customerData.password as string, customerData.balance);
+            });
+            return bank;
+        });
+
         balanceDiv.innerHTML = ""
         withdrawDiv.innerHTML = ""
         depositDiv.innerHTML = ""
 
         // find the inlogged customer
         const result = banks.find((bank: Bank) => bank.customers.find((customer: Customer) => customer.name === username));
-
+        
         result.customers.forEach((customer: Customer) => {
             if (customer.name === username) {
 
                 const balancePara = document.createElement("p");
                 balancePara.id = "balance-para";
+
+                let balance = customer.getBalance()
+
                 
-                balancePara.innerText = `Ditt saldo: ${customer.balance}`;
+                balancePara.innerText = `Ditt saldo: ${balance}`;
                 balanceDiv.appendChild(balancePara);
             }
         })
@@ -89,6 +100,14 @@ export function showCustomerPage(username: string | number) {
         button.addEventListener("click", () => {
             let banks = JSON.parse(localStorage.getItem("banks") as string);
 
+             // Recreate Customer instances
+            banks = banks.map((bank: Bank) => {
+                bank.customers = bank.customers.map((customerData) => {
+                    return new Customer(customerData.name as string, customerData.password as string, customerData.balance);
+                });
+                return bank;
+            });
+
             // find the inlogged customer
             const result = banks.find((bank: Bank) => bank.customers.find((customer: Customer) => customer.name === username));
             console.log("result", result);
@@ -96,7 +115,8 @@ export function showCustomerPage(username: string | number) {
             result.customers.forEach((customer: Customer) => {
                 if (customer.name === username) {
                     const amount = Number(inputAmount.value);
-                    customer.balance += amount;
+
+                    customer.deposit(amount);
                 }
                 localStorage.setItem("banks", JSON.stringify(banks));
             })
@@ -126,6 +146,14 @@ export function showCustomerPage(username: string | number) {
         button.addEventListener("click", () => {
             let banks = JSON.parse(localStorage.getItem("banks") as string);
 
+            // Recreate Customer instances
+            banks = banks.map((bank: Bank) => {
+                bank.customers = bank.customers.map((customerData) => {
+                    return new Customer(customerData.name as string, customerData.password as string, customerData.balance);
+                });
+                return bank;
+            });
+
             // find the inlogged customer
             const result = banks.find((bank: Bank) => bank.customers.find((customer: Customer) => customer.name === username));
 
@@ -137,7 +165,8 @@ export function showCustomerPage(username: string | number) {
                         alert("Du har inte tillräckligt med pengar");
                         return; 
                     }
-                    customer.balance -= amount;
+
+                    customer.withdraw(amount);
                 }
                 localStorage.setItem("banks", JSON.stringify(banks));
             })
