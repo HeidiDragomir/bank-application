@@ -1,5 +1,7 @@
 import { Bank } from "../classes/Bank.js";
 import { Customer } from "../classes/Customer.js";
+import { showCustomerPage } from "./showCustomerPage.js";
+import { showMessage } from "./showMessage.js";
 export function createSignupForm() {
     const root = document.getElementById("root");
     root.innerHTML = "";
@@ -51,18 +53,20 @@ export function createSignupForm() {
         let balance = 0;
         let customerObject = new Customer(username, password, balance);
         let banks = JSON.parse(localStorage.getItem("banks") || "[]");
-        console.log(banks);
         let bankIndex = banks.findIndex((bank) => bank.name === bankName);
-        console.log(banks[bankIndex]);
         if (bankIndex !== -1) {
             banks[bankIndex].customers.push(customerObject);
             localStorage.setItem("banks", JSON.stringify(banks));
+            showMessage("Kontot har skapats.");
+            showCustomerPage(username);
         }
         else {
             let newBank = new Bank(bankName);
             newBank.addCustomer(customerObject);
             banks.push(newBank);
             localStorage.setItem("banks", JSON.stringify(banks));
+            showMessage("Kontot har skapats.");
+            showCustomerPage(username);
         }
     });
     formContainer.appendChild(inputUsername);

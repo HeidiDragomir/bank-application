@@ -9,7 +9,7 @@ export class Bank {
     }
 
     addCustomer(newCustomer: Customer) {
-
         this.customers.push(newCustomer);
     }
+
 }

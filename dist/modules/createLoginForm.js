@@ -4,6 +4,8 @@ export function createLoginForm() {
     const formContainer = document.createElement("div");
     formContainer.innerHTML = "";
     formContainer.id = "form-container";
+    const textPara = document.createElement("p");
+    textPara.innerText = "Logga in som admin eller som kund";
     const inputUsername = document.createElement("input");
     inputUsername.type = "text";
     inputUsername.placeholder = "Användarnamn";
@@ -21,18 +23,9 @@ export function createLoginForm() {
         event.preventDefault();
         const username = inputUsername.value;
         const password = inputPassword.value;
-        // let customer = localStorage.getItem("customer")
-        // console.log(customer)
-        // if (customer !== null) {
-        //     const parsedCustomer  = JSON.parse(customer)
-        //     balance = parsedCustomer.balance
-        // }
-        //     let customerObject = new Customer(username, password, balance);
-        //     localStorage.setItem("customer", JSON.stringify(customerObject));
-        //     verifyUser(customerObject.name, customerObject.password);
-        // })
         verifyUser(username, password);
     });
+    formContainer.appendChild(textPara);
     formContainer.appendChild(inputUsername);
     formContainer.appendChild(inputPassword);
     formContainer.appendChild(buttonLogin);
