@@ -15,6 +15,7 @@ export function showAdmPage() {
     bankRegistry.addBank(bankB);
     bankRegistry.addBank(bankC);
 
+    bankRegistry.saveBanks();
     bankRegistry.showBanks();
 
     const bankItems = document.querySelectorAll("li");

@@ -29,15 +29,21 @@ export function createLoginForm() {
 
         const username = inputUsername.value;
         const password = inputPassword.value;
-        let balance = 0
 
-        let customer = new Customer(username, password, balance);
-        localStorage.setItem("customer", JSON.stringify(customer));
+        // let customer = localStorage.getItem("customer")
+        // console.log(customer)
 
-        console.log(customer);
+        // if (customer !== null) {
+        //     const parsedCustomer  = JSON.parse(customer)
+        //     balance = parsedCustomer.balance
+        // }
+        //     let customerObject = new Customer(username, password, balance);
+        //     localStorage.setItem("customer", JSON.stringify(customerObject));
 
-        verifyUser(customer.name, customer.password);
-    })
+        //     verifyUser(customerObject.name, customerObject.password);
+        // })
+        verifyUser(username, password);
+    });
 
     formContainer.appendChild(inputUsername);
     formContainer.appendChild(inputPassword);

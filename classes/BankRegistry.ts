@@ -10,6 +10,10 @@ export class BankRegistry {
         this.banks.push(bank);
     }
 
+    saveBanks() {
+        localStorage.setItem("banks", JSON.stringify(this.banks));
+    }
+
     showBanks() {
         const root = document.getElementById("root") as HTMLElement;
         const banksList = document.createElement("ul");

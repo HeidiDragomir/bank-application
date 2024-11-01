@@ -1,6 +1,7 @@
+import { Bank } from "../classes/Bank.js";
 import { Customer } from "../classes/Customer.js";
 
-export function showCustomerPage() {
+export function showCustomerPage(username) {
     const root = document.getElementById("root") as HTMLElement;
 
     const menu = document.createElement("ul");
@@ -18,11 +19,18 @@ export function showCustomerPage() {
     const withdraw = document.getElementById("withdraw-btn") as HTMLLinkElement;
 
     balance.addEventListener("click", () => {
-        let customer = JSON.parse(localStorage.getItem("customer") as string);
+        let banks = JSON.parse(localStorage.getItem("banks") as string);
 
-        const balance = document.createElement("p");
-        balance.innerText = `Ditt saldo: ${customer.balance}`;
-        root.appendChild(balance);
+        console.log("banks", banks);
+        // let customer_ = banks.map((bank: Bank) => bank.customers.find(customer => {
+        //     customer.name === username
+        //     return customer
+        // }));
+
+        // console.log(customer_)
+        // const balance = document.createElement("p");
+        // balance.innerText = `Ditt saldo: ${customer_.balance}`;
+        // root.appendChild(balance);
     });
 
     deposit.addEventListener("click", () => {
@@ -39,12 +47,38 @@ export function showCustomerPage() {
 
         button.addEventListener("click", () => {
             let customer = JSON.parse(localStorage.getItem("customer") as string);
+
+            let customerObject = new Customer(customer.name, customer.password, customer.balance);
+
+            const amount = Number(inputAmount.value);
+
+            customerObject.deposit(amount);
+
+            localStorage.setItem("customer", JSON.stringify(customerObject));
+        });
+        root.appendChild(button);
+    });
+
+    withdraw.addEventListener("click", () => {
+        const inputAmount = document.createElement("input");
+        inputAmount.type = "number";
+        inputAmount.placeholder = "Belopp";
+        inputAmount.name = "amount";
+        inputAmount.required = true;
+        root.appendChild(inputAmount);
+
+        const button = document.createElement("button");
+        button.type = "submit";
+        button.textContent = "Ta ut";
+
+        button.addEventListener("click", () => {
+            let customer = JSON.parse(localStorage.getItem("customer") as string);
             console.log(customer);
 
             let customerObject = new Customer(customer.name, customer.password, customer.balance);
 
             const amount = Number(inputAmount.value);
-            customerObject.deposit(amount);
+            customerObject.withdraw(amount);
             localStorage.setItem("customer", JSON.stringify(customerObject));
         });
         root.appendChild(button);

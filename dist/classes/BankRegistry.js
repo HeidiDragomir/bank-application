@@ -6,6 +6,9 @@ export class BankRegistry {
     addBank(bank) {
         this.banks.push(bank);
     }
+    saveBanks() {
+        localStorage.setItem("banks", JSON.stringify(this.banks));
+    }
     showBanks() {
         const root = document.getElementById("root");
         const banksList = document.createElement("ul");
