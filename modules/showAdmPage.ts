@@ -1,18 +1,14 @@
 import { Bank } from "../classes/Bank.js";
 import { BankRegistry } from "../classes/BankRegistry.js";
+import { logout } from "./logout.js";
 import { showBankPage } from "./showBankPage.js";
 import { showStartpage } from "./showStartpage.js";
 
 export function showAdmPage() {
     const root = document.getElementById("root") as HTMLElement;
 
-    const logoutBtn = document.createElement("button");
-    logoutBtn.innerText = "Logga ut";
-    logoutBtn.addEventListener("click", () => {
-        root.innerHTML = "";
-        showStartpage();
-    });
-    root.appendChild(logoutBtn);
+    logout()
+    
     let banks = localStorage.getItem("banks");
 
     if (banks === null) {
@@ -49,7 +45,7 @@ export function showAdmPage() {
             })
 
             bankItem.innerText = bank.name;
-            root.appendChild(bankItem);
+           root.appendChild(bankItem);
         });
     }
 
