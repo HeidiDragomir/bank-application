@@ -4,7 +4,8 @@ export class Customer {
         this.password = password;
         this.balance = balance;
     }
-    deposit(amount) {
+    deposit(amount, bank) {
+        bank.addCustomer(this);
         this.balance += amount;
     }
     withdraw(amount) {

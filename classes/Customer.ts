@@ -1,3 +1,5 @@
+import { Bank } from "./Bank.js";
+
 export class Customer {
     name: string | number;
     password: string | number;
@@ -10,7 +12,8 @@ export class Customer {
     }
 
    
-    deposit(amount: number) {
+    deposit(amount: number, bank: Bank) {
+        bank.addCustomer(this)
         this.balance += amount
     }
 
