@@ -1,7 +1,7 @@
 import { Bank } from "../classes/Bank.js";
 import { Customer } from "../classes/Customer.js";
 
-export function showCustomerPage(username) {
+export function showCustomerPage(username: string | number) {
     const root = document.getElementById("root") as HTMLElement;
 
     const menu = document.createElement("ul");
@@ -21,16 +21,18 @@ export function showCustomerPage(username) {
     balance.addEventListener("click", () => {
         let banks = JSON.parse(localStorage.getItem("banks") as string);
 
-        console.log("banks", banks);
-        // let customer_ = banks.map((bank: Bank) => bank.customers.find(customer => {
-        //     customer.name === username
-        //     return customer
-        // }));
+        // find the inlogged customer
+        const result = banks.find((bank: Bank) => bank.customers.find((customer: Customer) => customer.name === username));
+        console.log("result", result);
 
-        // console.log(customer_)
-        // const balance = document.createElement("p");
-        // balance.innerText = `Ditt saldo: ${customer_.balance}`;
-        // root.appendChild(balance);
+        result.customers.forEach((customer: Customer) => {
+            if (customer.name === username) {
+                const balance = document.createElement("p");
+                balance.innerText = `Ditt saldo: ${customer.balance}`;
+                root.appendChild(balance);
+            }
+        })
+        
     });
 
     deposit.addEventListener("click", () => {
@@ -46,15 +48,19 @@ export function showCustomerPage(username) {
         button.textContent = "Sätt in";
 
         button.addEventListener("click", () => {
-            let customer = JSON.parse(localStorage.getItem("customer") as string);
+            let banks = JSON.parse(localStorage.getItem("banks") as string);
 
-            let customerObject = new Customer(customer.name, customer.password, customer.balance);
+            // find the inlogged customer
+            const result = banks.find((bank: Bank) => bank.customers.find((customer: Customer) => customer.name === username));
+            console.log("result", result);
 
-            const amount = Number(inputAmount.value);
-
-            customerObject.deposit(amount);
-
-            localStorage.setItem("customer", JSON.stringify(customerObject));
+            result.customers.forEach((customer: Customer) => {
+                if (customer.name === username) {
+                    const amount = Number(inputAmount.value);
+                    customer.balance += amount;
+                }
+                localStorage.setItem("banks", JSON.stringify(banks));
+            })
         });
         root.appendChild(button);
     });
@@ -72,15 +78,21 @@ export function showCustomerPage(username) {
         button.textContent = "Ta ut";
 
         button.addEventListener("click", () => {
-            let customer = JSON.parse(localStorage.getItem("customer") as string);
-            console.log(customer);
+            let banks = JSON.parse(localStorage.getItem("banks") as string);
 
-            let customerObject = new Customer(customer.name, customer.password, customer.balance);
+            // find the inlogged customer
+            const result = banks.find((bank: Bank) => bank.customers.find((customer: Customer) => customer.name === username));
+            console.log("result", result);
 
-            const amount = Number(inputAmount.value);
-            customerObject.withdraw(amount);
-            localStorage.setItem("customer", JSON.stringify(customerObject));
+            result.customers.forEach((customer: Customer) => {
+                if (customer.name === username) {
+                    const amount = Number(inputAmount.value);
+                    customer.balance -= amount;
+                }
+                localStorage.setItem("banks", JSON.stringify(banks));
+            })
         });
+      
         root.appendChild(button);
     });
 

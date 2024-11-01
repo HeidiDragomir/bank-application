@@ -3,8 +3,6 @@ import { showAdmPage } from "./showAdmPage.js";
 import { showCustomerPage } from "./showCustomerPage.js";
 import { showMessage } from "./showMessage.js";
 export function verifyUser(username, password) {
-    console.log(username);
-    console.log(password);
     let banks = localStorage.getItem("banks");
     if (username === "admin" && password === "admin") {
         showMessage("Välkommen " + username);

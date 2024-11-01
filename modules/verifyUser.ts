@@ -5,8 +5,6 @@ import { showMessage } from "./showMessage.js";
 
 export function verifyUser(username: string | number, password: string | number) {
 
-    console.log(username)
-    console.log(password)
     let banks = localStorage.getItem("banks");
 
     if (username === "admin" && password === "admin") {
